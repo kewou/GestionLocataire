@@ -25,7 +25,7 @@ public class User {
     @javax.persistence.Id
     private Long id;
     
-    @Column(name="first_name",nullable=false)
+    @Column(name="name",nullable=false)
     private String name;
     
     @Column(name="last_name",nullable=false)
@@ -38,10 +38,5 @@ public class User {
         userDto.setLastName(lastName);
         return userDto;
     }
-
-    
-    
-    
-    
-    
+ 
 }

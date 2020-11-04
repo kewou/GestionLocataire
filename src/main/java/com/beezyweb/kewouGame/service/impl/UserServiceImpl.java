@@ -7,6 +7,7 @@ import com.beezyweb.kewouGame.repository.UserRepository;
 import com.beezyweb.kewouGame.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService{
+        
+    private final String alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     
     @Autowired
     private UserRepository userRepository;
@@ -32,15 +35,18 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDTO add(UserDTO userDto) {
+    public UserDTO add(UserDTO userDto) {        
         userRepository.save(userDto.convertToEntity());
         return userDto;
     }
 
     @Override
-    public UserDTO update(UserDTO userDto) {
-        userRepository.save(userDto.convertToEntity());
-        return userDto;
+    public UserDTO update(Long id,UserDTO userDto) {
+        User user=userRepository.getOne(id);
+        user.setName(userDto.getName());
+        user.setLastName(userDto.getLastName());
+        userRepository.save(user);
+        return user.convertToDTO();
     }
 
     @Override
@@ -51,5 +57,20 @@ public class UserServiceImpl implements UserService{
         }
         return listUserDto;
     }
+    
+    private String generateNumber(){
+        String res="";
+        Random rand = new Random();
+        res+=alphabet.charAt(rand.nextInt(10));
+        res+=String.valueOf(rand.nextInt(10));                
+        res+=alphabet.charAt(rand.nextInt(10));
+        res+=String.valueOf(rand.nextInt(10));
+        res+=alphabet.charAt(rand.nextInt(10));
+        return res;
+    }
+
+
+    
+
     
 }
