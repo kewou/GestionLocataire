@@ -6,6 +6,7 @@
 package com.beezyweb.kewouGame.service;
 
 import com.beezyweb.kewouGame.dto.UserDTO;
+import com.beezyweb.kewouGame.entities.User;
 import java.util.List;
 
 /**
@@ -14,13 +15,13 @@ import java.util.List;
  */
 public interface UserService {
     
-    UserDTO getUser(Long id); 
+    User getUser(Long id); 
     
-    List<UserDTO> getAllUser();
+    List<User> getAllUser();
     
     void delete(Long id);
     
-    UserDTO add(UserDTO u);
+    UserDTO add(UserDTO userDto);
     
     UserDTO update(Long id,UserDTO userDto);        
 }

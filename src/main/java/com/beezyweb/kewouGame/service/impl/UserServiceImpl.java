@@ -25,8 +25,8 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
 
     @Override
-    public UserDTO getUser(Long id) {
-       return userRepository.getOne(id).convertToDTO();
+    public User getUser(Long id) {
+       return userRepository.getOne(id);
     }
 
     @Override
@@ -35,27 +35,24 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDTO add(UserDTO userDto) {        
-        userRepository.save(userDto.convertToEntity());
-        return userDto;
+    public UserDTO add(UserDTO userFront) {        
+        userRepository.save(userFront.convertToEntity());
+        return userFront;
     }
 
     @Override
-    public UserDTO update(Long id,UserDTO userDto) {
+    public UserDTO update(Long id,UserDTO userFront) {
         User user=userRepository.getOne(id);
-        user.setName(userDto.getName());
-        user.setLastName(userDto.getLastName());
+        user.setName(userFront.getName());
+        user.setLastName(userFront.getLastName());
+        user.setEmail(userFront.getEmail());
         userRepository.save(user);
-        return user.convertToDTO();
+        return userFront;
     }
 
     @Override
-    public List<UserDTO> getAllUser() {
-        List<UserDTO> listUserDto = new ArrayList<>();
-        for(User user: userRepository.findAll()){
-            listUserDto.add(user.convertToDTO());
-        }
-        return listUserDto;
+    public List<User> getAllUser() {
+        return userRepository.findAll();
     }
     
     private String generateNumber(){
@@ -69,8 +66,4 @@ public class UserServiceImpl implements UserService{
         return res;
     }
 
-
-    
-
-    
 }
