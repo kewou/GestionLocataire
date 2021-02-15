@@ -3,6 +3,8 @@ package com.beezyweb.kewouGame.service.impl;
 
 import com.beezyweb.kewouGame.dto.UserDTO;
 import com.beezyweb.kewouGame.entities.User;
+import com.beezyweb.kewouGame.exception.NoDataFoundException;
+import com.beezyweb.kewouGame.exception.UserNotFoundException;
 import com.beezyweb.kewouGame.repository.UserRepository;
 import com.beezyweb.kewouGame.service.UserService;
 import java.util.ArrayList;
@@ -25,13 +27,15 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
 
     @Override
-    public User getUser(Long id) {
-       return userRepository.getOne(id);
+    public User getUser(Long id) {        
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));       
     }
 
     @Override
     public void delete(Long id) {
-        userRepository.deleteById(id);
+        User user=getUser(id);
+        userRepository.delete(user);
     }
 
     @Override
@@ -42,7 +46,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDTO update(Long id,UserDTO userFront) {
-        User user=userRepository.getOne(id);
+        User user=getUser(id);
         user.setName(userFront.getName());
         user.setLastName(userFront.getLastName());
         user.setEmail(userFront.getEmail());
@@ -52,7 +56,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<User> getAllUser() {
-        return userRepository.findAll();
+        List<User> users = (List<User>) userRepository.findAll();
+        if(users.isEmpty()){
+            throw new NoDataFoundException();
+        }                    
+        return users;
     }
     
     private String generateNumber(){

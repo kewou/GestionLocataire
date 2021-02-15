@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.beezyweb.kewouGame;
+package com.beezyweb.kewouGame.User;
 
 import com.beezyweb.kewouGame.entities.User;
 import com.beezyweb.kewouGame.repository.UserRepository;
@@ -34,7 +34,7 @@ public class UserRepositoryTest {
     @Test
     public void find_one_user(){
         User user;
-        user = userRepo.getOne(Long.valueOf(1));
+        user = userRepo.findById(Long.valueOf(1)).get();
         Assertions.assertThat(user).isNotNull();
         Assertions.assertThat(user.getName()).isEqualTo("Joel");
     }

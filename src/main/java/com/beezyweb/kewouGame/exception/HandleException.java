@@ -5,6 +5,9 @@
  */
 package com.beezyweb.kewouGame.exception;
 
+import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.RollbackException;
 import org.slf4j.Logger;
@@ -12,10 +15,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -31,13 +36,35 @@ public class HandleException extends ResponseEntityExceptionHandler{
     
     Logger logger = LoggerFactory.getLogger(this.getClass());
     
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Object> handleUserNotFoundException(
+        UserNotFoundException ex, WebRequest request) {
+        logger.error(ex.getMessage());
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", "User not found");
+        body.put("httpCode",HttpStatus.NOT_FOUND.value());
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
     
+    @ExceptionHandler(NoDataFoundException.class)
+    public ResponseEntity<Object> handleNodataFoundException(
+        NoDataFoundException ex, WebRequest request) {
+        logger.error(ex.getMessage());
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", "No users found");
+        body.put("httpCode",HttpStatus.NOT_FOUND.value());
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
+    
+    /*
     @ExceptionHandler(EntityNotFoundException.class)    
     @ResponseBody
     public ExceptionInfo resourceNotFound(EntityNotFoundException e){ 
         logger.error(e.getMessage());
         return new  ExceptionInfo(HttpStatus.NOT_FOUND.value(), e.getMessage(), "La ressouce recherchée n'existe pas");
-    }
+    }*/
     
     
     @ExceptionHandler(RollbackException.class)       
