@@ -1,4 +1,3 @@
-
 package com.beezyweb.kewouGame.entities;
 
 import com.beezyweb.kewouGame.dto.UserDTO;
@@ -17,39 +16,41 @@ import org.springframework.data.annotation.Id;
  *
  * @author frup73532
  */
-
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @Data
-public class User implements Serializable{
-    
+public class User implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @javax.persistence.Id
     private Long id;
-    
-    @NotEmpty(message="Please un nom")
+
+    @NotEmpty(message = "Please un nom")
     @Size(min = 2, max = 10)
-    @Column(name="name",nullable=false)
+    @Column(name = "name", nullable = false)
     private String name;
-    
-    @NotEmpty(message="Please un prénom")
+
+    @NotEmpty(message = "Please un prénom")
     @Size(min = 2, max = 10)
-    @Column(name="last_name",nullable=false)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
-    
-    @NotEmpty(message="Please un email")
-    @Column(name="email",nullable=false,unique = true)
+
+    @NotEmpty(message = "Please un email")
+    @Column(name = "email", nullable = false, unique = true)
     @javax.validation.constraints.Email
     private String email;
-    
-    
-    public UserDTO convertToDTO(){
+
+    public UserDTO convertToDTO() {
         UserDTO userDto = new UserDTO();
         userDto.setName(name);
         userDto.setLastName(lastName);
         userDto.setEmail(email);
         return userDto;
     }
- 
+
+    public User() {
+
+    }
+
 }
