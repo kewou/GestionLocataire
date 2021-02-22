@@ -14,14 +14,14 @@ import java.util.List;
  * @author frup73532
  */
 public interface UserService {
-    
-    User getUser(Long id); 
-    
+
+    User getUser(Long id);
+
     List<User> getAllUser();
-    
+
     void delete(Long id);
-    
+
     UserDTO add(UserDTO userDto);
-    
-    UserDTO update(Long id,UserDTO userDto);        
+
+    UserDTO update(Long id, UserDTO userDto);
 }

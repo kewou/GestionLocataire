@@ -16,27 +16,25 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
  *
  * @author frup73532
  */
-
 @DataJpaTest
 public class UserRepositoryTest {
-    
-    
+
     @Autowired
     private UserRepository userRepo;
-    
+
     @Test
-    public void find_all_users(){
+    public void find_all_users() {
         Iterable<User> users = userRepo.findAll();
         int nbUser = 2;
         Assertions.assertThat(users).hasSize(nbUser);
     }
-    
+
     @Test
-    public void find_one_user(){
+    public void find_one_user() {
         User user;
         user = userRepo.findById(Long.valueOf(1)).get();
         Assertions.assertThat(user).isNotNull();
         Assertions.assertThat(user.getName()).isEqualTo("Joel");
     }
-    
+
 }

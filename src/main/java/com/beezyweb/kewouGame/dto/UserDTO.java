@@ -14,18 +14,17 @@ import lombok.Data;
  */
 @Data
 public class UserDTO {
-    
+
     private String name;
     private String lastName;
     private String email;
-    
-    public User convertToEntity(){
+
+    public User convertToEntity() {
         User user = new User();
         user.setName(name);
         user.setLastName(lastName);
         user.setEmail(email);
         return user;
     }
-    
-    
+
 }

@@ -6,7 +6,6 @@
 package com.beezyweb.kewouGame.exception;
 
 import java.io.Serializable;
-import lombok.Data;
 
 /**
  *
