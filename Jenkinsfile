@@ -3,7 +3,7 @@ pipeline{
 	stages {
 		stage('build'){
 			steps{
-				bat "mvn.cmd --version'.execute()"
+				sh 'mvn --version'
 			}
 		}
 	}
