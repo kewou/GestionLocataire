@@ -3,7 +3,7 @@ pipeline{
 	stages {
 		stage('build'){
 			steps{
-				bat(echo 'joel')
+				bat 'mvn --version'
 			}
 		}
 	}
