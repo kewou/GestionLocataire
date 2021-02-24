@@ -5,9 +5,9 @@ pipeline{
         jdk 'jdk8' 
     }	
 	stages {
-		stage('build'){
+		stage('Build'){
 			steps{
-				bat 'mvn -v'
+				bat 'mvn clean install -DskipTests'
 			}
 		}
 	}
